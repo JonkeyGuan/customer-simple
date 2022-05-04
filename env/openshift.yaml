@@ -47,6 +47,12 @@ spec:
           env:
           - name: SPRING_PROFILES_ACTIVE
             value: dev
+          - name: TZ
+            value: "Asia/Shanghai"
+          - name: LANG
+            value: en_US.UTF-8
+          - name: JAVA_OPTS
+            value: "-Dfile.encoding=UTF8"
           livenessProbe:
             httpGet:
               path: /actuator/health
