@@ -1,0 +1,60 @@
+kind: Route
+apiVersion: route.openshift.io/v1
+metadata:
+  name: sap-po-simulator
+spec:
+  to:
+    kind: Service
+    name: sap-po-simulator
+  port:
+    targetPort: http
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: sap-po-simulator
+  labels:
+    app: sap-po-simulator
+spec:
+  ports:
+    - port: 8090
+      name: http
+  selector:
+    app: sap-po-simulator
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sap-po-simulator
+  labels:
+    app: sap-po-simulator
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sap-po-simulator
+  template:
+    metadata:
+      labels:
+        app: sap-po-simulator
+    spec:
+      containers:
+        - name: app
+          image: image-registry.openshift-image-registry.svc:5000/fuse/sap-po-simulator
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8090
+          env:
+          - name: SPRING_PROFILES_ACTIVE
+            value: dev
+          livenessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 8090
+              scheme: HTTP
+          readinessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 8090
+              scheme: HTTP
+
