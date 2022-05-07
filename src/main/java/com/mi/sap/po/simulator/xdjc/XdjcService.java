@@ -25,7 +25,7 @@ public class XdjcService {
                 .ZVBELN("0080158013")
                 .ZWERKS("1008")
                 .ZXDJCJG("Y")
-                .ZXDCE(0)
+                .ZXDCE("68")
                 .ZWAERK("")
                 .ZERDAT("2022-05-03")
                 .ZERZET("22:09:46")

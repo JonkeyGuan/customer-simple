@@ -29,7 +29,7 @@ public class Item_out {
     private String ZXDJCJG;
 
     @JsonProperty(value = "ZXDCE")
-    private int ZXDCE;
+    private String ZXDCE;
 
     @JsonProperty(value = "ZWAERK")
     private String ZWAERK;
