@@ -1,10 +1,10 @@
-package com.mi.sap.po.simulator;
+package com.mi.customer;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class SapPoSimulatorApplicationTests {
+class ApplicationTests {
 
 	@Test
 	void contextLoads() {

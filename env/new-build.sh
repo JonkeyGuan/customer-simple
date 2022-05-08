@@ -1,1 +1,1 @@
-oc new-build --name sap-po-simulator --binary -i ubi8-openjdk-11:1.3
+oc new-build --name customer-simple --binary -i ubi8-openjdk-11:1.3

@@ -2,4 +2,4 @@ cd ../
 mvn clean package -DskipTests
 
 cd env
-oc start-build sap-po-simulator --from-dir=../target/ -F
+oc start-build customer-simple --from-dir=../target/ -F

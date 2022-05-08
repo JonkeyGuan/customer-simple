@@ -1,4 +1,4 @@
-package com.mi.sap.po.simulator;
+package com.mi.customer;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

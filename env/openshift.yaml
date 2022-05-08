@@ -1,49 +1,49 @@
 kind: Route
 apiVersion: route.openshift.io/v1
 metadata:
-  name: sap-po-simulator
+  name: customer-simple
 spec:
   to:
     kind: Service
-    name: sap-po-simulator
+    name: customer-simple
   port:
     targetPort: http
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: sap-po-simulator
+  name: customer-simple
   labels:
-    app: sap-po-simulator
+    app: customer-simple
 spec:
   ports:
-    - port: 8090
+    - port: 8080
       name: http
   selector:
-    app: sap-po-simulator
+    app: customer-simple
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: sap-po-simulator
+  name: customer-simple
   labels:
-    app: sap-po-simulator
+    app: customer-simple
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: sap-po-simulator
+      app: customer-simple
   template:
     metadata:
       labels:
-        app: sap-po-simulator
+        app: customer-simple
     spec:
       containers:
         - name: app
-          image: image-registry.openshift-image-registry.svc:5000/fuse/sap-po-simulator
+          image: image-registry.openshift-image-registry.svc:5000/base-data/customer-simple
           imagePullPolicy: Always
           ports:
-            - containerPort: 8090
+            - containerPort: 8080
               name: app
               protocol: TCP
             - containerPort: 8778
@@ -53,8 +53,6 @@ spec:
               name: promethus
               protocol: TCP
           env:
-          - name: SPRING_PROFILES_ACTIVE
-            value: dev
           - name: TZ
             value: "Asia/Shanghai"
           - name: LANG
@@ -70,11 +68,34 @@ spec:
           livenessProbe:
             httpGet:
               path: /actuator/health
-              port: 8090
+              port: 8080
               scheme: HTTP
           readinessProbe:
             httpGet:
               path: /actuator/health
-              port: 8090
+              port: 8080
               scheme: HTTP
-
+          volumeMounts:
+          - name: data-volume
+            mountPath: /deployments/data
+      volumes:
+      - name: data-volume
+        configMap:
+          name: customer-data
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: customer-data
+data:
+  data.json: |
+    [
+        {
+            "id": "101770",
+            "name": "客户1"
+        },
+        {
+            "id": "101771",
+            "name": "客户2"
+        }
+    ]
